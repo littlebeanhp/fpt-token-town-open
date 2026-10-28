@@ -4,20 +4,18 @@ The MIT licence in [LICENSE](./LICENSE) covers the **code only**. Everything und
 listed here with where it came from.
 
 This is the open edition. The original project also used district houses built from a purchased
-asset pack and some street props; those are **not** included and not redistributable. Districts
-are drawn from primitive shapes instead.
+asset pack, some street props, AI-generated walking characters and a landmark model. None of those
+are included. Districts are drawn from primitive shapes and visitors are voxel people.
 
 ## 3D models (`public/models/`)
 
-| File                                  | Origin                                                                                                                                                                               | Status                                                                                                        |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
-| `quaternius-tree-v1.glb`              | The lightest tree from Quaternius's [Textured LowPoly Trees](https://quaternius.itch.io/textured-lowpoly-trees), converted from FBX by `scripts/convert-quaternius-tree.mjs`.        | CC0 1.0                                                                                                       |
-| `fpt-walk-v2.glb`, `grab-walk-v2.glb` | Walking characters. Text-to-image model → image-to-3D with Hunyuan3D-2.1 → body cut into parts and walk cycle authored in Blender → `scripts/optimize-glb.mjs` (`character` preset). | **To confirm**: Tencent Hunyuan3D licence terms (territory and usage limits) and the text-to-image model used |
-| `ho-guom-v1.glb`                      | Hồ Gươm landmark, optimised from an authoring export. Origin not recorded.                                                                                                           | **To confirm**                                                                                                |
-| `pin-tree-v1.glb`, `tree-v1.glb`      | Trees. Origin not recorded.                                                                                                                                                          | **To confirm**                                                                                                |
+| File                             | Origin                                                                                                                                                                        | Status         |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| `quaternius-tree-v1.glb`         | The lightest tree from Quaternius's [Textured LowPoly Trees](https://quaternius.itch.io/textured-lowpoly-trees), converted from FBX by `scripts/convert-quaternius-tree.mjs`. | CC0 1.0        |
+| `pin-tree-v1.glb`, `tree-v1.glb` | Trees. Origin not recorded.                                                                                                                                                   | **To confirm** |
 
-"To confirm" files were made by the author with generative tools. Their licence has not been
-checked yet, so do not rely on them for anything beyond running this demo.
+"To confirm" means the origin and licence of these two trees have not been recorded yet. Do not rely
+on them beyond running this demo.
 
 ## Logos (`public/logos/`)
 

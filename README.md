@@ -2,7 +2,7 @@
 
 > **Open edition.** The original city uses district houses built from a purchased, non-redistributable
 > asset pack. This repository leaves those out: every district is drawn from primitive shapes, and
-> the street dressing is skipped. To use your own houses, set `assetUrl` on a model in
+> the street dressing and the animated characters are skipped. To use your own houses, set `assetUrl` on a model in
 > `src/data/models.ts` (see [Replace a Factory With a GLB](#replace-a-factory-with-a-glb)).
 > Asset provenance and licences are in [ASSETS.md](./ASSETS.md); the code is MIT.
 
@@ -86,10 +86,9 @@ Upload the contents of `out/`, serve `404.html` for missing paths, and cache `/_
 - Each model shop has a dense serpentine queue between silver stanchions and sagging red ropes, its head at the house's own entrance. The loader finds that entrance rather than assuming one: the lowest front-facing pane of shopfront glass, lit or dark, is the way in, and the doorway lamp moves there so the opening the line walks into is the one that glows. Because a door is rarely centred, the whole serpentine mirrors to run its rows away from it, which keeps the first row full length on either side.
 - How many people turn up follows the model's token burn. The counts span four orders of magnitude, so the share is taken on a log scale: the busiest district fills its line and runs all eighteen runners, the quietest keeps a short line and seven, and nobody is left standing alone. Mirroring only ever lengthens a path, so the line is scaled against a frontage-independent capacity and no house can out-queue a busier one by having a wider shopfront.
 - Every 0.5 seconds the line takes one short step: the front visitor walks through the doorway and stays indoors until the next exchange; the previous indoor visitor exits, while one returning runner rejoins the back. Runners use three staggered routes around each building and nobody disappears. Waiting legs rest between steps; walking and running strides follow actual travel distance. Some visitors wear their district's brand color, and the supplied Grab rider appears only among stationary bystanders or mounted on road bikes.
-- Grab and FPT characters use three instanced parts from their optimized walking GLBs. Their one-second split-leg clips are sampled independently from distance travelled, so queue steps, normal walking, and running use matching leg cadence. Grab is excluded from the walking and queue crowds, and FPT belongs to the guide alone: exactly one FPT character stands in town, outside the speech studio, so the mark over their head always means the same person. The runtime assets retain all animation channels at about 94 KB / 1,776 triangles and 67 KB / 948 triangles respectively.
+- The animated Grab and FPT characters (three instanced parts each, split-leg walk cycles sampled from distance travelled) are not shipped in the open edition: without their GLBs every visitor and the guide are voxel people, and Grab riders do not appear on the road. Drop `grab-walk-v2.glb` and `fpt-walk-v2.glb` into `public/models/` to bring them back; `CHARACTER_SPECS` in `src/experience/world/Crowd.ts` names the expected node layout.
 - That one FPT visitor is the town guide: they stand on the speech studio's plaza with an exclamation mark over their head linking to the maker's LinkedIn. `townHost` in `src/data/models.ts` holds both the stop and the destination; the mark is an HTML anchor in the label layer, projected from the guide's head every other frame and hidden whenever it would leave the frame or cover a panel.
 - Original GLB authoring exports live under the gitignored `.local-assets/glb/` folder. Only optimized runtime copies belong in `public/models/`.
-- The core uses `ho-guom-v1.glb` (about 281 KB). Its separate `textured_mesh.obj.001` window object receives warm HDR emission, with a quarter-resolution highlight blur providing bloom. The original export stays in `.local-assets/glb/ho_guom (1).glb`.
 
 ## Time-Lapse City (Milestone 2)
 
@@ -187,8 +186,6 @@ The browser script checks nonblank pixels, changing animation, the core default,
 The PostCSS override applies a security fix to Next.js 15's transitive dependency. Keep the lockfile checked in. The bundled local fonts use system fonts as their loading fallback.
 
 The interface is a full-viewport city with compact glass panels, an overlaid title, Previous/Next navigation and time controls. The old header, model dock and footer have been removed. Each panel carries the model's reported usage for the week, its context length and its catalog price; the city directory lists all seven, busiest first. Speech is metered in characters and everything else in tokens. A model with no catalog entry yet reads "Not available" rather than carrying a guessed price. A small link in the top right opens the serverless inference catalog on the platform itself.
-
-Both walking characters are rebuilt from the gitignored sources with `node scripts/optimize-glb.mjs .local-assets/glb/<name>_walk.glb <name>-walk-v2 character`. The `character` preset simplifies far harder than a building preset and disables flatten, join, instancing and palettes, because the legs are separate animated nodes that those passes would merge; quantization then re-splits each animated pivot from its mesh, which is the shape `Crowd` expects. Filenames carry their version because `/models/*` is served immutable.
 
 The Quaternius archive stays in gitignored `.local-assets/glb/`. `scripts/convert-quaternius-tree.mjs` extracts the lightest FBX tree and bakes bark/leaf colors into one material; the simplified, quantized runtime GLB is 40.6 KB / 881 triangles. Planters and soil use two shared instance batches across all tree variants. Rear corner lanterns are omitted.
 
